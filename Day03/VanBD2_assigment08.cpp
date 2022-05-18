@@ -1,19 +1,6 @@
 #include <iostream>
 using namespace std;
 
-/***************************************************************
- * Input: str String
- * Return: the length of string
- * Descrition: count the length of string
- ****************************************************************/
-int lengOfStr(const char* str){
-    int len = 0;
-    while(str[len]!='\0'){
-        len++;
-    }
-    return len;
-}
-
 /****************************************************************
  * Input: str Mainstring 
  *        sub Substring
@@ -21,10 +8,8 @@ int lengOfStr(const char* str){
  * Descrition: Find the position of Substring in Mainstring
  ***************************************************************/
 int findsubstr(const char *str, char *sub){
-    int lenMainStr = lengOfStr(str);
-    int lenSubStr = lengOfStr(sub);
     int indexSub = 0, mark = -1;
-    for(int i = 0; i < lenMainStr ; i++){
+    for(int i = 0; str[i] != '\0'; i++){
         if(sub[indexSub] == str[i]){
             if(sub[indexSub] == str[i+1])
                 continue;
@@ -36,7 +21,7 @@ int findsubstr(const char *str, char *sub){
             indexSub = 0;
             mark = -1;
         }
-        if(indexSub == lenSubStr)
+        if(sub[indexSub] == '\0')
             return mark;
     }
     return mark;
