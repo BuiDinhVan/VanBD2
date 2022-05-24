@@ -22,6 +22,8 @@ int main() {
 
 String::String() {
 	this->str = new char[100];
+	if (this->str)
+		memset(this->str, '\0', 100);
 }
 
 /**********************************************************
@@ -60,9 +62,8 @@ ostream& operator<<(ostream& out, String& str)
 ***********************************************************/
 istream& operator>>(istream& in, String& str)
 {
-	fflush(stdin);
-	str.str = new char[100];
 	cout << "Enter the string: ";
 	in >> str.str;
 	return in;
 }
+
