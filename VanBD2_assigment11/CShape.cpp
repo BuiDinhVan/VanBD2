@@ -20,7 +20,7 @@ void CLine::draw(int x, int y, HDC hdc) {
 	HPEN pen = CreatePen(PS_SOLID, 5, colorr);
 	SelectObject(hdc, pen);
 	MoveToEx(hdc, x, y, NULL);
-	LineTo(hdc, x + length, y);	
+	LineTo(hdc, x + length, y);
 }
 
 /*********************************************************
@@ -40,7 +40,7 @@ void CCircle::draw(int x, int y, HDC hdc) {
 	COLORREF colorr = RGB(color >> 16, (color & 0xff00) >> 8, color & 0xff);
 	HPEN pen = CreatePen(PS_SOLID, 3, colorr);
 	SelectObject(hdc, pen);
-	Ellipse(hdc, x, y, x + 2 * radium, y + 2 * radium);
+	Ellipse(hdc, x - radium, y - radium, x + radium, y + radium);
 }
 
 /*********************************************************
@@ -54,14 +54,14 @@ CRectangle::CRectangle(int width, int heigh, int color) {
 }
 
 /*********************************************************
-* Input: start point of Rectangle
+* Input: center point of Rectangle
 * Description: draw rectangle function
 **********************************************************/
 void CRectangle::draw(int x, int y, HDC hdc) {
 	COLORREF colorr = RGB(color >> 16, (color & 0xff00) >> 8, color & 0xff);
 	HPEN pen = CreatePen(PS_SOLID, 3, colorr);
 	SelectObject(hdc, pen);
-	Rectangle(hdc, x, y, x + width, y + heigh);
+	Rectangle(hdc, x - width / 2, y - heigh / 2, x + width / 2, y + heigh / 2);
 }
 
 /*********************************************************
@@ -75,14 +75,14 @@ CSquare::CSquare(int len, int color) {
 }
 
 /*********************************************************
-* Input: start point of Square
+* Input: center point of Square
 * Description: draw square function
 **********************************************************/
 void CSquare::draw(int x, int y, HDC hdc) {
 	COLORREF colorr = RGB(color >> 16, (color & 0xff00) >> 8, color & 0xff);
 	HPEN pen = CreatePen(PS_SOLID, 3, colorr);
 	SelectObject(hdc, pen);
-	Rectangle(hdc, x, y, x + width, y + heigh);
+	Rectangle(hdc, x - width / 2, y - heigh / 2, x + width / 2, y + heigh / 2);
 }
 
 int main() {
@@ -93,13 +93,13 @@ int main() {
 	Pic.picture[3] = new CSquare(20, 0xaabbcc);
 	HWND console_hanle = GetConsoleWindow();
 	HDC device_context = GetDC(console_hanle);
-	
+
 	int line = 70;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			if (j != i) {
 				for (int k = 0; k < 4; k++) {
-					if (k != j && k != i) {				
+					if (k != j && k != i) {
 						for (int l = 0; l < 4; l++) {
 							if (l != k && l != j && l != i) {
 								Pic.picture[i]->draw(100, line, device_context);
